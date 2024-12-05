@@ -12,6 +12,9 @@ getGenes(pthwy, input)
 
 \item{input}{}
 }
+\value{
+genes
+}
 \description{
 getGenes
 for heatmapPathway app

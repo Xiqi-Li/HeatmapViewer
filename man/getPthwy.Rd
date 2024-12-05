@@ -10,6 +10,9 @@ getPthwy(gseaRes)
 \arguments{
 \item{gseaRes}{global variable gseaRes}
 }
+\value{
+Pthwy
+}
 \description{
 getPthwy
 for heatmapPathway app

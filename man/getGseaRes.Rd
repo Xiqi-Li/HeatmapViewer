@@ -10,6 +10,9 @@ getGseaRes(input)
 \arguments{
 \item{input}{shiny input}
 }
+\value{
+GseaRes
+}
 \description{
 getGseaRes
 for heatmapPathway app

@@ -101,6 +101,10 @@ drawHeatmap=function(input,z_data_mx,split_group,dge.p,DEGp_colFun,dge.logFC,log
 #' @param pth p-value threshold
 #'
 #' @return igraph object
+#' @importFrom ppcor pcor
+#' @import igraph
+#' @importFrom corpcor cor_pmat
+#'
 #' @export
 #'
 getPCorMxNetwork=function(data_mx,plotIg=F,method=c("ppcor","corpcor"),seed=123,pth=0.05){
