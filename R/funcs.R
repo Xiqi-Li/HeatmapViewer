@@ -103,7 +103,8 @@ drawHeatmap=function(input,z_data_mx,split_group,dge.p,DEGp_colFun,dge.logFC,log
 #' @return igraph object
 #' @importFrom ppcor pcor
 #' @import igraph
-#' @importFrom corpcor cor_pmat
+#' @importFrom corpcor cor2pcor
+#' @importFrom ggcorrplot cor_pmat
 #'
 #' @export
 #'
@@ -119,7 +120,8 @@ getPCorMxNetwork=function(data_mx,plotIg=F,method=c("ppcor","corpcor"),seed=123,
   }else if(method=="corpcor"){
     pcor_c=corpcor::cor2pcor(cor(t(data_mx)))
     dimnames(pcor_c)=list(rownames(data_mx),rownames(data_mx))
-    pcor_p=cor_pmat(t(data_mx))
+    pcor_p=
+      ggcorrplot::cor_pmat(t(data_mx))
     pcor_c.ig=pcor_c
     pcor_c.ig[pcor_p>pth/(ncol(pcor_p)^2)]=0
     diag(pcor_c.ig) = 0
