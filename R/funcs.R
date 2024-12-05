@@ -41,54 +41,54 @@ getGenes=function(pthwy,input){
   return(genes)
 }
 
-#' drawHeatmap
-#' for heatmapPathway app
-#'
-#' @param gseaRes global variable gseaRes
-#' @param input shiny inpuy
-#' @param z_data_mx z-scored data matrix
-#' @param split_group global variable split_group
-#' @param dge.p global variable
-#' @param DEGp_colFun global variable
-#' @param dge.logFC global variable
-#' @param logFC_colFun global variable
-#' @param dge.logFC.breaks global variable
-#' @param genes global variable
-#'
-#' @return
-#' @export
-#'
-drawHeatmap=function(input,z_data_mx,split_group,dge.p,DEGp_colFun,dge.logFC,logFC_colFun,dge.logFC.breaks,gseaRes,genes){
+# #' drawHeatmap
+# #' for heatmapPathway app
+# #'
+# #' @param gseaRes global variable gseaRes
+# #' @param input shiny inpuy
+# #' @param z_data_mx z-scored data matrix
+# #' @param split_group global variable split_group
+# #' @param dge.p global variable
+# #' @param DEGp_colFun global variable
+# #' @param dge.logFC global variable
+# #' @param logFC_colFun global variable
+# #' @param dge.logFC.breaks global variable
+# #' @param genes global variable
+# #'
+# #' @return ptwHeatmap
+# #' @export
 
-  heatmap_mRNA<-Heatmap(
-    t(scale(t(z_data_mx))),
-    name="level\nz_score",
-    top_annotation = getHeatMapAnnotation(
-      sampleAttr = clean_RNA_sample_info,
-      # data_mx = log2_expressions,
-      tracks=input$topTracks[input$topTracks%in%colnames(clean_RNA_sample_info)]
-    ),
-    left_annotation = rowAnnotation(
-      pval = anno_simple(-log10(dge.p),col=DEGp_colFun,pch=ifelse(dge.p<0.05,"*",NA)),
-      logFC = anno_simple(
-        dge.logFC,col = logFC_colFun,
-        pch=ifelse(genes %in% gseaRes$leadingEdge[[which(gseaRes$pathway==input$pathwyName)]],20,NA),
-        pt_size = unit(0.1,"npc"),
-        pt_gp = gpar(fontface=2))),
-    show_row_names = F,column_dend_reorder = T,show_column_names = F,
-    clustering_distance_rows =function(x,y) 1 - cor(x, y),
-    column_split = split_group)
-  # column_names_gp = gpar(fontsize=1))
-
-  lgd_pvalue = Legend(title = input$dgeSig, col_fun = DEGp_colFun, at = -log10(c(min(dge.p),0.05,0.15,1)),
-                      labels = c("0", "0.05", "0.15", 1))
-  lgd_sig = Legend(pch = "*", type = "points", labels = "< 0.05")
-  lgd_logFC = Legend(title = "logFC", col_fun = logFC_colFun, at = dge.logFC.breaks,
-                     labels = format(dge.logFC.breaks,digits=2))
-  lgd_leadingEdge = Legend(pch = 1, type = "points", labels = "leading edge")
-  ptwHeatmap=ComplexHeatmap::draw(heatmap_mRNA, annotation_legend_list = list(lgd_pvalue, lgd_sig,lgd_logFC,lgd_leadingEdge))
-  return(ptwHeatmap)
-}
+# drawHeatmap=function(input,z_data_mx,split_group,dge.p,DEGp_colFun,dge.logFC,logFC_colFun,dge.logFC.breaks,gseaRes,genes){
+#
+#   heatmap_mRNA<-Heatmap(
+#     t(scale(t(z_data_mx))),
+#     name="level\nz_score",
+#     top_annotation = getHeatMapAnnotation(
+#       sampleAttr = clean_RNA_sample_info,
+#       # data_mx = log2_expressions,
+#       tracks=input$topTracks[input$topTracks%in%colnames(clean_RNA_sample_info)]
+#     ),
+#     left_annotation = rowAnnotation(
+#       pval = anno_simple(-log10(dge.p),col=DEGp_colFun,pch=ifelse(dge.p<0.05,"*",NA)),
+#       logFC = anno_simple(
+#         dge.logFC,col = logFC_colFun,
+#         pch=ifelse(genes %in% gseaRes$leadingEdge[[which(gseaRes$pathway==input$pathwyName)]],20,NA),
+#         pt_size = unit(0.1,"npc"),
+#         pt_gp = gpar(fontface=2))),
+#     show_row_names = F,column_dend_reorder = T,show_column_names = F,
+#     clustering_distance_rows =function(x,y) 1 - cor(x, y),
+#     column_split = split_group)
+#   # column_names_gp = gpar(fontsize=1))
+#
+#   lgd_pvalue = Legend(title = input$dgeSig, col_fun = DEGp_colFun, at = -log10(c(min(dge.p),0.05,0.15,1)),
+#                       labels = c("0", "0.05", "0.15", 1))
+#   lgd_sig = Legend(pch = "*", type = "points", labels = "< 0.05")
+#   lgd_logFC = Legend(title = "logFC", col_fun = logFC_colFun, at = dge.logFC.breaks,
+#                      labels = format(dge.logFC.breaks,digits=2))
+#   lgd_leadingEdge = Legend(pch = 1, type = "points", labels = "leading edge")
+#   ptwHeatmap=ComplexHeatmap::draw(heatmap_mRNA, annotation_legend_list = list(lgd_pvalue, lgd_sig,lgd_logFC,lgd_leadingEdge))
+#   return(ptwHeatmap)
+# }
 
 
 
@@ -107,7 +107,7 @@ drawHeatmap=function(input,z_data_mx,split_group,dge.p,DEGp_colFun,dge.logFC,log
 #' @importFrom ggcorrplot cor_pmat
 #'
 #' @export
-#'
+
 getPCorMxNetwork=function(data_mx,plotIg=F,method=c("ppcor","corpcor"),seed=123,pth=0.05){
   method=method[1]
   if(method=="ppcor"){
@@ -140,12 +140,13 @@ getPCorMxNetwork=function(data_mx,plotIg=F,method=c("ppcor","corpcor"),seed=123,
   return(ig.0)
 }
 
+
 #' getVariables
 #'
 #' @param input app input.
-#'
-#' @return
+#' @return a list of variables
 #' @export
+#'
 #'
 getVariables=function(input){
   gseaRes=getGseaRes(input)

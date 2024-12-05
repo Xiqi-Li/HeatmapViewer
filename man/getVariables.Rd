@@ -9,6 +9,9 @@ getVariables(input)
 \arguments{
 \item{input}{app input.}
 }
+\value{
+a list of variables
+}
 \description{
 getVariables
 }
