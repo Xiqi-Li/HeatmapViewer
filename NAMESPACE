@@ -2,10 +2,4 @@
 
 export(getGenes)
 export(getGseaRes)
-export(getPCorMxNetwork)
 export(getPthwy)
-export(getVariables)
-import(igraph)
-importFrom(corpcor,cor2pcor)
-importFrom(ggcorrplot,cor_pmat)
-importFrom(ppcor,pcor)
